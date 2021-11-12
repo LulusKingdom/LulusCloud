@@ -9,7 +9,7 @@
 // - When using a 3.3V microcontroller with a 5V-powered NeoPixel strip,
 //   a LOGIC-LEVEL CONVERTER on the data line is STRONGLY RECOMMENDED.
 // (Skipping these may work OK on your workbench but can fail in the field)
-c
+
 #include <Adafruit_NeoPixel.h>
 #ifdef __AVR__
  #include <avr/power.h> // Required for 16 MHz Adafruit Trinket
@@ -20,10 +20,10 @@ c
 #define LED_PIN    6
 
 // How many NeoPixels are attached to the Arduino?
-#define LED_COUNT 60
+#define LED_COUNT 10
 
 // Declare our NeoPixel strip object:
-Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRBW + NEO_KHZ800);
+Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_RGBW + NEO_KHZ800);
 // Argument 1 = Number of pixels in NeoPixel strip
 // Argument 2 = Arduino pin number (most are valid)
 // Argument 3 = Pixel type flags, add together as needed:
@@ -54,17 +54,21 @@ void setup() {
 
 void loop() {
   // Fill along the length of the strip in various colors...
-  colorWipe(strip.Color(255,   0,   0), 50); // Red
-  colorWipe(strip.Color(  0, 255,   0), 50); // Green
-  colorWipe(strip.Color(  0,   0, 255), 50); // Blue
+  /*
+    colorWipe(strip.Color(255,   0,   0), 50); // Red
+    colorWipe(strip.Color(  0, 255,   0), 50); // Green
+    colorWipe(strip.Color(  0,   0, 255), 50); // Blue
+  
+    // Do a theater marquee effect in various colors...
+    theaterChase(strip.Color(127, 127, 127), 50); // White, half brightness
+    theaterChase(strip.Color(127,   0,   0), 50); // Red, half brightness
+    theaterChase(strip.Color(  0,   0, 127), 50); // Blue, half brightness
+  
+    rainbow(10);             // Flowing rainbow cycle along the whole strip 
 
-  // Do a theater marquee effect in various colors...
-  theaterChase(strip.Color(127, 127, 127), 50); // White, half brightness
-  theaterChase(strip.Color(127,   0,   0), 50); // Red, half brightness
-  theaterChase(strip.Color(  0,   0, 127), 50); // Blue, half brightness
-
-  rainbow(10);             // Flowing rainbow cycle along the whole strip
-  theaterChaseRainbow(50); // Rainbow-enhanced theaterChase variant
+    theaterChaseRainbow(50); // Rainbow-enhanced theaterChase variant
+    */
+    rainbow(10);      
 }
 
 
