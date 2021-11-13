@@ -20,7 +20,7 @@
 #define LED_PIN    6
 
 // How many NeoPixels are attached to the Arduino?
-#define LED_COUNT 10
+#define LED_COUNT 750
 
 // Declare our NeoPixel strip object:
 Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_RGBW + NEO_KHZ800);
@@ -58,19 +58,64 @@ void loop() {
     colorWipe(strip.Color(255,   0,   0), 50); // Red
     colorWipe(strip.Color(  0, 255,   0), 50); // Green
     colorWipe(strip.Color(  0,   0, 255), 50); // Blue
-  
+
     // Do a theater marquee effect in various colors...
     theaterChase(strip.Color(127, 127, 127), 50); // White, half brightness
     theaterChase(strip.Color(127,   0,   0), 50); // Red, half brightness
     theaterChase(strip.Color(  0,   0, 127), 50); // Blue, half brightness
-  
-    rainbow(10);             // Flowing rainbow cycle along the whole strip 
+
+    rainbow(10);             // Flowing rainbow cycle along the whole strip
 
     theaterChaseRainbow(50); // Rainbow-enhanced theaterChase variant
-    */
-    rainbow(10);      
+    
+
+    rainbow(10);
+
+  */
+    
+    colorPulse(255, 0, 255, 0, 3);
+    colorPulse(0, 255, 0, 0, 3);
+    lightning(3);
 }
 
+void colorPulse(uint r, uint b, uint g, uint w, uint cycleCount) {
+  uint cycles = 0;
+  bool increasing = true;
+  float brightness = 0.5;
+  while(true) {
+    delay(50);
+
+    strip.fill(strip.Color(r * brightness, b * brightness, g * brightness, w * brightness));
+    strip.show();
+
+    if (increasing) {
+      if (brightness > 0.9) increasing = false;
+      else brightness += 0.05;
+    } else {
+      if (brightness < 0.1) {
+        increasing = true;
+        cycles++;
+      }
+      else brightness -= 0.05;
+    }
+    if (cycles > cycleCount) break;
+  }
+}
+
+void lightning(uint cycleCount) {
+  for(uint i = 0; i < cycleCount; i++) {
+    long flashes = random(2,6);
+    for(uint j = 0; j < flashes; j++) {
+      delay(random(200, 1000));
+      strip.fill(strip.Color(0, 0, 0, random(0, 255)));
+      strip.show();
+      delay(random(200,400));
+      strip.fill();
+      strip.show();
+    }
+    delay(random(2000, 5000));
+  }
+}
 
 // Some functions of our own for creating animated effects -----------------
 
